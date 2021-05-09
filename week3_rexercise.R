@@ -2,6 +2,8 @@ library(readr)        # to import tabular data (e.g. csv)
 library(dplyr)        # to manipulate (tabular) data
 library(ggplot2)      # to visualize data
 
+install.packages("gghighlight")
+library(gghighlight)
 
 caro <- read_delim("caro60.csv",",") # adjust path
 caro
@@ -71,4 +73,20 @@ p3_caro<-ggplot(data=caro_filter_longsegements, aes(E,N,color=segment_id))+
 p3_caro
 
 # comment: I chose to filter out segments <=6 minutes. I have a bit different segments than the plots in the excercise-descripiton. This might come from different thresholds chosen...
+
+
+## Task 5 
+pedestrian <- read_delim("pedestrian.csv",",") # adjust path
+pedestrian
+pedestrian$TrajID<-as.factor(pedestrian$TrajID)
+pedestrian$TrajID2<-pedestrian$TrajID
+
+p_pedestrian<- ggplot(data=pedestrian, aes(E,N))+
+  geom_point(data=pedestrian[,2:5], color="grey")+
+  geom_point(aes(color=TrajID))+
+  geom_path(aes(color=TrajID))+
+  facet_wrap(.~TrajID)+
+  coord_equal()
+p_pedestrian
+
 
