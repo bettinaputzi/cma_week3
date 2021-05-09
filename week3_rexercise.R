@@ -17,3 +17,19 @@ caro <- caro %>%
     nPlus3  = sqrt((E-lead(E,3))^2+(N-lead(N,3))^2) # distance to pos +3 minutes
     )
 
+## Task 2
+caro <- caro %>%
+  rowwise() %>%
+  mutate(
+    stepMean = mean(c(nMinus3, nMinus2, nMinus1,nPlus1,nPlus2, nPlus3))
+  ) %>%
+  ungroup() 
+
+
+caro <- caro %>% 
+  ungroup() %>%
+  mutate(static = stepMean < mean(stepMean, na.rm = TRUE)) # For the steps smaller than stepmean, caro is not moving (static=TRUE=STOP)
+
+
+
+
