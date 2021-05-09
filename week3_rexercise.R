@@ -17,7 +17,7 @@ caro <- caro %>%
     nPlus3  = sqrt((E-lead(E,3))^2+(N-lead(N,3))^2) # distance to pos +3 minutes
     )
 
-## Task 2
+## Task  Specify and apply threshold d
 caro <- caro %>%
   rowwise() %>%
   mutate(
@@ -30,6 +30,13 @@ caro <- caro %>%
   ungroup() %>%
   mutate(static = stepMean < mean(stepMean, na.rm = TRUE)) # For the steps smaller than stepmean, caro is not moving (static=TRUE=STOP)
 
+
+## Task 3 Visualize segmented trajectories
+p_caro<-ggplot(data=caro, aes(E,N))+
+  geom_point(aes(color=static))+
+  geom_path()+
+  coord_equal()
+p_caro
 
 
 
